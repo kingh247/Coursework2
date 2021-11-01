@@ -3,7 +3,7 @@
 void Player::initTexture()
 {
 	// load a texture from file
-	if (!this->texture.loadFromFile("Textures/ship.png"))
+	if (!this->texture.loadFromFile("Textures/ships.png"))
 	{
 		
 		std::cout << "ERROR::PLAYER INITTEXTURE:: Could not load the texture file." << "\n";
