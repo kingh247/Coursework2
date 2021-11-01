@@ -2,78 +2,73 @@
 
 #include "Game.h"
 
-
-
-
-
-
-// constructors
-void Game::intiializeVariables()
-{
-	this->window = nullptr;
-}
-
+//private functions
 void Game::initWindow()
 {
-	this->videoMode.height = 600;
-	this->videoMode.width = 600;
-
-
-	this->window = new sf::RenderWindow(this->videoMode, "CourseWork 2 game 1", sf::Style::Titlebar | sf::Style::Close);
+	
+	this->window = new sf::RenderWindow(sf::VideoMode(800, 600), "CourseWork 2 Game ", sf::Style::Close | sf::Style::Titlebar);
+	this->window->setFramerateLimit(144);
+	this->window->setVerticalSyncEnabled(false);
 }
-
-// constructors /destructor
+//private functions
+void Game::initPlayer()
+{
+	this->player = new Player();
+}
+//con/des
 Game::Game()
 {
-	this->intiializeVariables();
 	this->initWindow();
-
+	this->initPlayer();
 }
 
 Game::~Game()
 {
 	delete this->window;
+	delete this->player;
 }
-
-// Accessors
-const bool Game::running() const
+// functions
+void Game::run()
 {
-	return this->window->isOpen();
+	while (this->window->isOpen()) 
+	{
+		this->update();
+		this->render();
+	}
 }
 
 
-void Game::pollEvents()
-{
-    // Event polling
-    while (this->window->pollEvent(this->ev))
-    {
-        switch (this->ev.type)
-        {
-        case sf::Event::Closed:
-            this->window->close();
-            break;
-
-        case sf::Event::KeyPressed:
-            if (this->ev.key.code == sf::Keyboard::Escape)
-               this-> window->close();
-            break;
-        }
-
-    }
-
-}
 
 // functions
+
 void Game::update()
 {
-    this->pollEvents();
-
+	sf::Event ev;	
+	while (this->window->pollEvent(ev))
+	{
+		if (ev.Event::type == sf::Event::Closed)
+			this->window->close();
+		if (ev.Event::KeyPressed && ev.Event::key.code == sf::Keyboard::Escape)
+			this->window->close();
+	}
+	// Move player
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+		this->player->move(-1.f, 0.f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+		this->player->move(1.f, 0.f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+		this->player->move(0.f, -1.f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+		this->player->move(0.f, 1.f);
 }
 
 void Game::render()
 {
+	this-> window->clear();
 
-    this->window->clear(sf::Color(255,0,255));
+	// draw stuff
+	this->player->render(*this->window);
 
-    this->window->display();
+	this->window->display();
+   
 }

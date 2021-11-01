@@ -9,22 +9,12 @@
 #include "Game.h"
 
 
-//using namespace sf;
-
 int main()
 {
-    // game engine
+   
     Game game;
 
-    
-    //Game Loop
-    while (game.running())
-    {
-        //update
-        game.update();
-        //render
-        game.render();
-
-    }
+    game.run();
+  
     return 0;
 }

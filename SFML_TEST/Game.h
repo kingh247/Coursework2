@@ -1,11 +1,7 @@
 #pragma once
 
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
+#include "Player.h"
 /*
 * 
 * Class to be used s game engine wrapper class
@@ -13,32 +9,30 @@
 
 class Game
 {
-public:
-	// Constructor / Destructor
-	Game();
-	virtual~Game();
 
-	// Acessorss	
-	const bool running()const;
-
-	//functions
-	void pollEvents();
-	void update();
-	void render();
 
 private:
 
-	// variables
-	//window
 	sf::RenderWindow* window;
-	sf::VideoMode videoMode;
-	sf::Event ev;
+
+	//player
+	Player* player;
 	
-	// private functions
-
-	void intiializeVariables();
+	//private functions
 	void initWindow();
+	void initPlayer();
 
+public:
+	// Constructor / Destructor
+
+	Game();
+	virtual~Game();
+
+	//functions
+	void run();
+
+	void update();
+	void render();
 
 };
 	
