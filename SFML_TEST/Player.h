@@ -1,4 +1,5 @@
-#pragma once
+#ifndef PLAYER_H
+#define PLAYER_H
 
 
 #include <SFML/Graphics.hpp>
@@ -9,7 +10,7 @@
 #include<iostream>
 /*
 *
-* Class to be used s game engine wrapper class
+* Class to be used as game engine wrapper class
 */
 
 class Player
@@ -30,8 +31,13 @@ public:
 	Player();
 	virtual~Player();
 
+	//Accessor
+	const sf::Vector2f& getPos() const;
+
 	//functions
 	void move(const float dirX, const float dirY);
 	void update();
 	void render(sf::RenderTarget& target);
 };
+
+#endif // !PLAYER_H
