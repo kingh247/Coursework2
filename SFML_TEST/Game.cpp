@@ -46,12 +46,14 @@ Game::~Game()
 	delete this->player;
 
 	//Delete Textures
-	for (auto& i : this->textures)
+
+	for (auto& i : this->textures) 
 	{
 		delete i.second;
 	}
 
 	//Delete Bullets
+
 	for (auto* i : this->bullets)
 	{
 		delete i;
@@ -63,6 +65,7 @@ Game::~Game()
 		delete i;
 	}
 	}
+
 
 // functions
 void Game::run()
@@ -101,8 +104,10 @@ void Game::updateInput()
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->player->canAttack())
 	{
+
 		this->bullets.push_back(new Bullet(this->textures["BULLET"], this->player->getPos().x + this->player->getBounds().width/2.f,
 		this->player->getPos().y, 0.f, -1.f, 5.f));
+
 	}
 }
 
@@ -112,10 +117,13 @@ void Game::updateBullets()
 
 	for (auto* bullet : this->bullets) {
 
+
 		bullet->update();
 
 		//Bullet culling (top of screen)
+
 		if (bullet->getBounds().top + bullet->getBounds().height < 0.f)
+
 		{
 
 			//Delete the bullet
@@ -131,6 +139,7 @@ void Game::updateBullets()
 	}
 
 }
+
 
 void Game::updateEnemies()
 {
@@ -157,6 +166,7 @@ void Game::updateEnemies()
 
 
 
+
 // functions
 
 void Game::update()
@@ -168,7 +178,9 @@ void Game::update()
 
 	this->updateBullets();
 
+
 	this->updateEnemies();
+
 
 }
 
@@ -178,6 +190,7 @@ void Game::render()
 
 	// draw stuff
 	this->player->render(*this->window);
+
 
 	for (auto* bullet : this->bullets) {
 
@@ -189,6 +202,7 @@ void Game::render()
 	}
 
 	//this->enemy->render(this->window);
+
 
 	this->window->display();
 
