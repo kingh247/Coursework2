@@ -19,7 +19,8 @@ private:
 
 public:
 	Bullet();
-	Bullet(sf::Texture* texture,float posX, float posY, float dirX, float dirY, float movementSpeed);
+	Bullet(sf::Texture* texture, float posX, float posY, float dirX, float dirY, float movementSpeed);
+  
 	virtual ~Bullet();
 
 	//Accessor
@@ -29,4 +30,6 @@ public:
 	void render(sf::RenderTarget* target);
 };
 
+
 #endif // !BULLET_H
+

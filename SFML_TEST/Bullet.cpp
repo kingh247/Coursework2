@@ -4,7 +4,8 @@ Bullet::Bullet()
 {
 }
 
-Bullet::Bullet(sf::Texture *texture, float posX, float posY, float dirX, float dirY, float movementSpeed)
+
+Bullet::Bullet(sf::Texture* texture, float posX, float posY, float dirX, float dirY, float movementSpeed)
 {
 	this->shape.setTexture(*texture);
 

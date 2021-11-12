@@ -12,7 +12,7 @@ void Player::initTexture()
 	// load a texture from file
 	if (!this->texture.loadFromFile("Textures/ships.png"))
 	{
-		
+
 		std::cout << "ERROR::PLAYER INITTEXTURE:: Could not load the texture file." << "\n";
 	}
 
@@ -25,7 +25,7 @@ void Player::initSprite()
 	this->sprite.setTexture(this->texture);
 
 	//resize this sprite
-	this->sprite.scale(0.1f,0.1f);
+	this->sprite.scale(0.1f, 0.1f);
 }
 
 Player::Player()
@@ -44,9 +44,16 @@ const sf::Vector2f& Player::getPos() const
 	return this->sprite.getPosition();
 }
 
+
+const sf::FloatRect Player::getBounds() const
+{
+	return this->sprite.getGlobalBounds();
+}
+
+
 void Player::move(const float dirX, const float dirY)
 {
-	this->sprite.move(this->movementSpeed*dirX, this->movementSpeed * dirY);
+	this->sprite.move(this->movementSpeed * dirX, this->movementSpeed * dirY);
 
 }
 
@@ -63,7 +70,9 @@ const bool Player::canAttack()
 
 void Player::updateAttack()
 {
-	if(this->attackCooldown < this->attackCooldownMax)
+
+	if (this->attackCooldown < this->attackCooldownMax)
+
 		this->attackCooldown += 0.5f;
 }
 

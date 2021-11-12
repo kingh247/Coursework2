@@ -37,6 +37,8 @@ public:
 
 	//Accessor
 	const sf::Vector2f& getPos() const;
+	const sf::FloatRect getBounds() const;
+
 
 	//functions
 	void move(const float dirX, const float dirY);
@@ -46,5 +48,6 @@ public:
 	void update();
 	void render(sf::RenderTarget& target);
 };
+
 
 #endif // !PLAYER_H
