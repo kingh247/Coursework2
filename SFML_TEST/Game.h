@@ -1,12 +1,14 @@
-#ifndef GAME_H
+
 #define GAME_H
 
 #include <map>
 #include "Player.h"
 #include "Bullet.h"
+
 #include "Enemy.h"
 /*
 *
+
 * Class to be used as game engine wrapper class
 */
 
@@ -33,6 +35,7 @@ private:
 
 	//player
 	Player* player;
+
 
 	//enemies
 	float spawnTimer;
@@ -63,8 +66,11 @@ public:
 	void updateWorld();
 	void updateCollision();
 	void updateBullets();
+
 	void updateEnemies();
+
 	void updateCombat();
+
 	void update();
 	void renderGUI();
 	void renderWorld();
@@ -72,5 +78,4 @@ public:
 
 };
 
-#endif // !GAME_H
 
