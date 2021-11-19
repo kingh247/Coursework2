@@ -14,7 +14,7 @@ void Enemy::initVariables()
 	 hpMax = 10;
 	 damage = 1;
 	 points = 5;
-	 speed = 5.f;
+	 speed = 3.f;
 }
 
 Enemy::Enemy(float pos_x, float pos_y)
@@ -40,6 +40,7 @@ void Enemy::update()
 {
 	this->shape.move(0.f, this->speed);
 }
+s
 
 void Enemy::render(sf::RenderTarget * target)
 {

@@ -20,6 +20,28 @@ void Game::initTextures()
 	this->textures["BULLET"]->loadFromFile("Textures/bullet.png");
 }
 
+void Game::initGUI()
+{
+	//Load fonts
+	if (!this->font.loadFromFile("Fonts/montserrat.ttf"))
+		std::cout << "ERROR::GAME::Failed to load font" << "\n";
+
+	//init point text 
+	this->pointText.setFont(this->font);
+	this->pointText.setCharacterSize(12);
+	this->pointText.setFillColor(sf::Color::White);
+	this->pointText.setString("test");
+}
+
+void Game::initWorld()
+{
+	if (!this->worldBackgroundTex.loadFromFile("Textures/space.png"))
+	{
+		std::cout << "ERROR::GAME::COULD NOT LOAD BACKGROUND TEXTURE" << "\n";
+	}
+	this->worldBackground.setTexture(this->worldBackgroundTex);
+}
+
 void Game::initPlayer()
 {
 	this->player = new Player();
@@ -36,6 +58,8 @@ Game::Game()
 {
 	this->initWindow();
 	this->initTextures();
+	this->initGUI();
+	this->initWorld();
 	this->initPlayer();
 	this->initEnemies();
 }
@@ -111,6 +135,22 @@ void Game::updateInput()
 	}
 }
 
+void Game::updateGUI()
+{
+
+}
+
+void Game::updateWorld()
+{
+}
+
+void Game::updateCollision()
+{
+	if (this->player->getBounds().left < 0.f) {
+		this->player->setPosition(0.f, this->player->getBounds().top);
+	}
+}
+
 void Game::updateBullets()
 {
 	int counter = 0;
@@ -143,6 +183,7 @@ void Game::updateBullets()
 
 void Game::updateEnemies()
 {
+	//spawning
 	this->spawnTimer += 0.5f;
 	if (this->spawnTimer >= this->spawnTimerMax)
 	{
@@ -150,17 +191,39 @@ void Game::updateEnemies()
 		this->spawnTimer = 0.f;
 	}
 
-	for (int i = 0; i < this->enemies.size(); ++i) {
+	//update
+	int counter = 0;
+	for (auto* enemy : this->enemies) {
+		enemy->update();
 
-		this->enemies[i]->update();
-
-		//Remove enemies at the bottom of the screen
-		if (this->enemies[i]->getBounds().top > this->window->getSize().y) 
+		if (enemy->getBounds().top > this->window->getSize().y)
 		{
-			this->enemies.erase(this->enemies.begin() + i);
-			std::cout << this->enemies.size() << "\n";
+
+			//Delete the enemy
+			delete this->enemies.at(counter);
+			this->enemies.erase(this->enemies.begin() + counter);
+			--counter;
 		}
 
+		++counter;
+	}
+}
+
+void Game::updateCombat()
+{
+	for (int i = 0; i < this->enemies.size(); ++i) {
+		bool enemy_deleted = false;
+		for (size_t k = 0; k < this->bullets.size() && enemy_deleted == false; k++) {
+			if (this->enemies[i]->getBounds().intersects(this->bullets[k]->getBounds())) {
+				delete this->enemies[i];
+				this->enemies.erase(this->enemies.begin() + i);
+
+				delete this->bullets[k];
+				this->bullets.erase(this->bullets.begin() + k);
+
+				enemy_deleted = true;
+			}
+		}
 	}
 }
 
@@ -172,9 +235,12 @@ void Game::updateEnemies()
 void Game::update()
 {
 	this->updatePollEvents();
+
 	this->updateInput();
 
 	this->player->update();
+
+	this->updateCollision();
 
 	this->updateBullets();
 
@@ -182,11 +248,32 @@ void Game::update()
 	this->updateEnemies();
 
 
+	this->updateCombat();
+
+	this->updateGUI();
+
+	this->updateWorld();
 }
+
+void Game::renderGUI()
+{
+	this->window->draw(this->pointText);
+}
+
+void Game::renderWorld()
+{
+	this->window->draw(this->worldBackground);
+
+}
+
+
 
 void Game::render()
 {
 	this->window->clear();
+
+	//Draw world
+	this->renderWorld();
 
 	// draw stuff
 	this->player->render(*this->window);
@@ -200,6 +287,8 @@ void Game::render()
 
 		enemy->render(this->window);
 	}
+
+	this->renderGUI();
 
 	//this->enemy->render(this->window);
 
