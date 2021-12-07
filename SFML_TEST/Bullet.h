@@ -12,7 +12,11 @@ class Bullet
 {
 private:
 	sf::Sprite shape;
-	sf::Texture* texture;
+	sf::Texture texture;
+	sf::Sprite sprite;
+
+	void initSprite();
+	void initTexture();
 
 	sf::Vector2f direction;
 	float movementSpeed;

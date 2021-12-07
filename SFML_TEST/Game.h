@@ -5,6 +5,8 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Enemy.h"
+#include <string>
+#include <sstream>
 /*
 *
 * Class to be used as game engine wrapper class
@@ -25,14 +27,22 @@ private:
 	//GUI
 	sf::Font font;
 	sf::Text pointText;
+	sf::Text endScreenText;
 
 	//world
 	sf::Texture worldBackgroundTex;
 	sf::Sprite worldBackground;
 
+	//systems 
+	int points; 
+
 
 	//player
 	Player* player;
+
+	//PlayerGUI
+	sf::RectangleShape playerHpBar;
+	sf::RectangleShape playerHpBarBack;
 
 	//enemies
 	float spawnTimer;
@@ -45,6 +55,7 @@ private:
 	void initTextures();
 	void initGUI();
 	void initWorld();
+	void initSystems();
 	void initPlayer();
 	void initEnemies();
 
