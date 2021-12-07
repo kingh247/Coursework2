@@ -23,6 +23,7 @@ void Bullet::initSprite()
 	this->sprite.scale(0.1f, 0.1f);
 }
 
+
 Bullet::Bullet(sf::Texture* texture, float posX, float posY, float dirX, float dirY, float movementSpeed)
 {
 

@@ -47,6 +47,7 @@ const sf::Vector2f& Player::getPos() const
 	return this->sprite.getPosition();
 }
 
+
 const sf::FloatRect Player::getBounds() const
 {
 	return this->sprite.getGlobalBounds();
@@ -106,7 +107,9 @@ const bool Player::canAttack()
 
 void Player::updateAttack()
 {
+
 	if (this->attackCooldown < this->attackCooldownMax)
+
 		this->attackCooldown += 0.5f;
 }
 
